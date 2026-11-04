@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vite/
+test-results/
+*.log
+*.pid
+artifacts/
+
+# 本地环境变量与发布包，不要提交
+.env
+.env.*
+*.tar.gz

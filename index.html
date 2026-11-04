@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f7f5" />
+    <meta name="description" content="A one-button blade adventure through the wilderness." />
+    <link rel="icon" type="image/svg+xml" href="/assets/blade.svg" />
+    <title>Bladebound</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Bladebound home" data-i18n-aria="game.home">
+          <img src="/assets/brand.svg" width="38" height="38" alt="" />
+          <span><strong data-i18n="game.title">Bladebound</strong><small data-i18n="game.subtitle">WILDERNESS TRIALS</small></span>
+        </a>
+        <nav class="chapter-nav" aria-label="Trial progress" data-i18n-aria="nav.progress">
+          <span class="chapter-step current" data-chapter="0"><b>01</b><span data-i18n="stage.bamboo">Bamboo Grove</span></span>
+          <span class="chapter-line"></span>
+          <span class="chapter-step" data-chapter="1"><b>02</b><span data-i18n="stage.bridge">Crimson Bridge</span></span>
+          <span class="chapter-line"></span>
+          <span class="chapter-step" data-chapter="2"><b>03</b><span data-i18n="stage.temple">Mountain Gate</span></span>
+        </nav>
+        <div class="header-tools">
+          <span class="wallet" aria-label="Coins" data-i18n-aria="label.coins"><i data-lucide="coins"></i><b id="wallet-count">0</b></span>
+          <button class="icon-button" id="collection-button" data-tooltip="Blades" aria-label="Blades" data-i18n-tooltip="label.blades" data-i18n-aria="label.blades"><i data-lucide="swords"></i></button>
+          <button class="icon-button" id="record-button" data-tooltip="Records" aria-label="Records" data-i18n-tooltip="label.records" data-i18n-aria="label.records"><i data-lucide="trophy"></i></button>
+          <button class="icon-button" id="settings-button" data-tooltip="Settings" aria-label="Settings" data-i18n-tooltip="label.settings" data-i18n-aria="label.settings"><i data-lucide="settings-2"></i></button>
+        </div>
+      </header>
+
+      <main>
+        <section class="runbar" aria-label="Current run" data-i18n-aria="nav.status">
+          <div class="run-title"><span class="status-dot"></span><span id="stage-label">Bamboo Grove</span><span id="difficulty-label" class="tiny-tag">Standard</span></div>
+          <div class="run-progress" aria-label="Stage progress" data-i18n-aria="nav.levelProgress"><span id="progress-fill"></span></div>
+          <div class="run-metrics"><span><i data-lucide="sparkles"></i><b id="score">0</b></span><span class="desktop-metric"><i data-lucide="crosshair"></i><b id="kills">0</b></span></div>
+        </section>
+
+        <section class="game-viewport" id="game-viewport" aria-label="Bladebound game area" data-i18n-aria="nav.area">
+          <canvas id="game" tabindex="0" aria-label="Bladebound game canvas" data-i18n-aria="nav.canvas"></canvas>
+          <div class="scene-corner"><span id="module-label">Act 1 / Grove of Light</span><span class="scene-mark" data-i18n="game.subtitle">WILDERNESS TRIALS</span></div>
+          <div id="scene-toast" class="scene-toast" role="status" aria-live="polite"></div>
+          <div id="overlay" class="overlay"></div>
+          <div class="viewport-vignette"></div>
+        </section>
+
+        <section class="controlbar" aria-label="Game controls" data-i18n-aria="nav.controls">
+          <div class="shield-group"><span class="metric-label" data-i18n="label.shields">Shields</span><div id="shields" class="shield-icons"></div></div>
+          <div class="energy-group"><div class="energy-heading"><span><i data-lucide="zap"></i><span data-i18n="label.energy">Slash Energy</span></span><b id="energy-value">0 / 100</b></div><div class="energy-track"><span id="energy-fill"></span></div></div>
+          <div class="action-tools"><button class="icon-button" id="sound-button" data-tooltip="Mute Sound" aria-label="Mute Sound"><i data-lucide="volume-2"></i></button><button class="icon-button" id="pause-button" data-tooltip="Pause" aria-label="Pause"><i data-lucide="pause"></i></button><button class="jump-button" id="jump-button" aria-label="Flip" data-i18n-aria="action.flip"><i data-lucide="move-up-right"></i><span data-i18n="action.flip">Flip</span></button></div>
+        </section>
+        <footer class="bottom-strip"><span><span class="live-dot"></span><span data-i18n="game.subtitle">WILDERNESS TRIALS</span><b>01-03</b></span><span id="best-footer">Best 0</span><span class="version-label">Prototype 0.2.0</span></footer>
+      </main>
+      <div id="dialog-root"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
