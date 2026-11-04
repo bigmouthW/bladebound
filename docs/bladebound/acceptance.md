@@ -2,7 +2,7 @@
 
 # Bladebound prototype: running and acceptance
 
-Version 0.2.0  
+Version 0.2.1  
 Date 4 November 2026
 
 ## 1 Deliverables
@@ -136,7 +136,7 @@ The dev control interface is enabled only in Vite dev mode with `?qa=1` in the U
 | Viewports | All four verified; no horizontal or vertical page overflow on phone portrait or landscape |
 | Three-stage playthrough | Completed; final score 3102, 54 slices, 14 kills, 309 coins |
 | Production build | Successful, dist produced; the 0.2 game JS is about 52 KB gzipped |
-| Public deployment | 0.2.0 published on port 3392 of a standalone server (address not disclosed here); 4 viewports × 2 languages, 8 scenarios, all passed with zero errors |
+| Public deployment | 0.2.1 published on port 3392 of a standalone server (address not disclosed here); 4 viewports × 2 languages, 8 scenarios, all passed with zero errors |
 | Document links | All 12 local links in the newly delivered documents resolve |
 
 The score, slice count, and kill count from the playthrough are the output of that input script — not an upper bound and not an expected player average. A relaxed-difficulty run proves a completable path exists under the current rules; it says nothing about first-time human clear rates, standard-difficulty balance, or performance on real phones.

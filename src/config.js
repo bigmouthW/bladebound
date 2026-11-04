@@ -1,5 +1,5 @@
 export const CONFIG = Object.freeze({
-  version: '0.2.0',
+  version: '0.2.1',
   fixedStep: 1000 / 120,
   gravity: 1.35,
   floorY: 492,
