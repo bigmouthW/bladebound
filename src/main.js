@@ -8,6 +8,9 @@ import { t, setLanguage, getLanguage, normalizeLanguage } from './i18n.js';
 const icons = { Coins, Swords, Trophy, Settings2, Sparkles, Crosshair, Zap, Volume2, VolumeX, Pause, MoveUpRight, Play, ArrowRight, RotateCcw, House, Shield, ShieldPlus, HeartPulse, Wind, Waves, X, Check, Lock, Medal, Flag, Leaf, Flower2 };
 const $ = selector => document.querySelector(selector);
 const icon = name => `<i data-lucide="${name}"></i>`;
+// Resolve art against Vite's base so the build also works from a sub-path
+// (for example a hosting portal that serves the game from /<slug>/).
+const assetUrl = name => `${import.meta.env.BASE_URL}assets/${name}.svg`;
 const format = value => Math.floor(value).toLocaleString(getLanguage() === 'en' ? 'en-US' : 'zh-CN');
 const storage = (() => {
   try { return window.localStorage; }
@@ -107,6 +110,15 @@ function sound(kind) {
     oscillator.onended = () => { oscillator.disconnect();gain.disconnect(); };
   } catch { /* Audio is optional when the browser disallows it. */ }
 }
+
+// iOS suspends or interrupts the AudioContext when the page is backgrounded;
+// only a fresh user gesture can bring it back, so resume on every touch/click.
+function resumeAudio() {
+  if (!audio) return;
+  if (audio.state === 'suspended' || audio.state === 'interrupted') audio.resume().catch(() => {});
+}
+document.addEventListener('touchend', resumeAudio, { passive: true });
+document.addEventListener('click', resumeAudio, { passive: true });
 
 function updateSoundIcon() {
   $('#sound-button').innerHTML = icon(profile.sound ? 'volume-2' : 'volume-x');
@@ -220,7 +232,7 @@ function collectionDialog() {
   showDialog('collection.title', `<div class="collection-grid">${SKINS.map(skin => {
     const owned = profile.owned.includes(skin.id), selected = profile.selected === skin.id;
     const affordable = profile.coins >= skin.cost;
-    return `<article class="blade-item ${selected ? 'selected' : ''}"><div class="blade-preview" style="--swatch:${skin.color}"><img src="/assets/blade.svg" alt="${t(`skin.${skin.id}`)}" style="filter:${skin.id === 'jade' ? 'hue-rotate(100deg)' : skin.id === 'frost' ? 'hue-rotate(170deg)' : skin.id === 'rose' ? 'hue-rotate(310deg)' : 'none'}"></div><strong>${t(`skin.${skin.id}`)}</strong><button data-skin="${skin.id}" ${selected || (!owned && !affordable) ? 'disabled' : ''} ${!owned && !affordable ? `title="${t('error.insufficientCoins')}"` : ''}>${icon(selected ? 'check' : owned ? 'swords' : 'coins')}${selected ? t('action.equipped') : owned ? t('action.equip') : skin.cost}</button></article>`;
+    return `<article class="blade-item ${selected ? 'selected' : ''}"><div class="blade-preview" style="--swatch:${skin.color}"><img src="${assetUrl('blade')}" alt="${t(`skin.${skin.id}`)}" style="filter:${skin.id === 'jade' ? 'hue-rotate(100deg)' : skin.id === 'frost' ? 'hue-rotate(170deg)' : skin.id === 'rose' ? 'hue-rotate(310deg)' : 'none'}"></div><strong>${t(`skin.${skin.id}`)}</strong><button data-skin="${skin.id}" ${selected || (!owned && !affordable) ? 'disabled' : ''} ${!owned && !affordable ? `title="${t('error.insufficientCoins')}"` : ''}>${icon(selected ? 'check' : owned ? 'swords' : 'coins')}${selected ? t('action.equipped') : owned ? t('action.equip') : skin.cost}</button></article>`;
   }).join('')}</div><div id="collection-notice" class="modal-notice" role="status"></div>`, true, 'collection');
   document.querySelectorAll('[data-skin]').forEach(button => button.addEventListener('click', () => {
     const result = buySkin(profile, button.dataset.skin);
@@ -237,7 +249,7 @@ async function loadAssets() {
   const names = ['blade', 'fruit', 'pear', 'crate', 'archer', 'gate'];
   const entries = await Promise.all(names.map(async name => {
     const image = new Image();
-    image.src = `/assets/${name}.svg`;
+    image.src = assetUrl(name);
     await image.decode();
     return [name, image];
   }));

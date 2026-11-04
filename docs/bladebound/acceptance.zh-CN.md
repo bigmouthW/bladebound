@@ -41,7 +41,7 @@ npm run build
 npm run preview -- --port 4175
 ```
 
-生产文件位于 dist，需要 HTTP 静态服务。直接双击 index.html 不能正确加载 ES Modules 和资源。当前资源路径以站点根目录为基准；部署在子目录时需一并调整 Vite base 和素材路径。
+生产文件位于 dist，需要 HTTP 静态服务。直接双击 index.html 不能正确加载 ES Modules 和资源。资源路径已改为相对路径（vite.config.js 中 `base: './'`），同一份构建既可从站点根目录运行，也可放在任意子目录或第三方游戏平台上。
 
 ## 3 操作
 

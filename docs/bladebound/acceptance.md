@@ -41,7 +41,7 @@ npm run build
 npm run preview -- --port 4175
 ```
 
-Production files live in `dist` and need a static HTTP server. Double-clicking `index.html` does not load ES modules or assets correctly. Asset paths are currently rooted at the site root, so deploying into a subdirectory requires adjusting both the Vite `base` and the asset paths.
+Production files live in `dist` and need a static HTTP server. Double-clicking `index.html` does not load ES modules or assets correctly. Asset paths are relative (`base: './'` in `vite.config.js`), so one build runs from a domain root or any sub-path, including third-party portals.
 
 ## 3 Controls
 
